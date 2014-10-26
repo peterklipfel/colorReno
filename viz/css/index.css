@@ -40,11 +40,7 @@ p {
 .pane {
   position: relative;
   height: 100%;
-}
-.info {
-  text-align: center;
-  width: 70%;
-  margin: 0 auto;
+  min-height: 745px;
 }
 .words {
   position: absolute;
@@ -52,6 +48,9 @@ p {
   top: 50%;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
+}
+.top {
+  background-color: #FF884A;
 }
 iframe {
   display: block;

@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Color Reno</title>
+		<meta charset="utf-8">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link href='http://fonts.googleapis.com/css?family=Ropa+Sans' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+		<link rel="stylesheet" href="css/index.css" />
+  		<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+		<script src="L.CanvasOverlay.js"></script>
+
+	</head>
+	<body>
+	  <div class="info pane">
+	    <div>
+		  <img src='img/logo.png' id="logo"/>
+		</div>
+        <h2>Visualizing the Colors of Reno</h2>
+	    <p>The map shows colors from the color pallette of images taken at the location of each circle. There are 15000 images that were taken over a 10 year period. All 10 years were superimposed onto a single year.</p>
+		<h4>Double Click to Zoom</h4>
+	  </div>
+	  <div class="pane">
+	    <iframe src="/index.html"></iframe>
+	  </div>
+	  <div class="info pane">
+		<div class="words">
+	      <h2>Explore Images</h2>
+		  <p>Click on any point to access a link to the image</p>
+	    </div>
+	  </div>
+	  <div class="pane">
+	    <iframe src="https://peterklipfel.cartodb.com/viz/76dc1f9a-5d41-11e4-ab12-0e853d047bba/embed_map"></iframe>
+	  </div>
+		<script src="data.js" charset="utf-8"></script>
+		<script>
+		function distance(input, target) {
+			return Math.sqrt(
+				input.reduce(function(o,c,i) {
+					return o + Math.pow(input[i] - target[i], 2);
+				}, 0)
+			);
+		}
+		
+		function sd(input, mu) {
+			if(typeof mu === 'undefined') {
+				mu = input.reduce(function(o,c) { return o + c; }, 0) / input.length;
+			}
+			
+			return Math.sqrt(
+				input.reduce(function(o,c) {
+					return o + Math.pow(c - mu, 2);
+				}, 0) / input.length
+			);
+		}
+		
+		function isNotGrayscale(color) {
+			return sd(color) > 5;
+		}
+		function isNotSkyBlue(color) {
+			return distance(color, [54,108,162]) > 200;
+		}
+		
+		function normalizeTime(time) {
+			var off = new Date("2004-11-01T00:00:00Z");
+			var max = new Date("2014-04-01T00:00:00Z");
+			return (item.time - off) / (max - off);
+		}
+		
+		function normalizeTimeYear(time) {
+			time = new Date(time.setYear(1990));
+			
+			var off = new Date("1990-01-01T00:00:00Z");
+			var max = new Date("1990-12-31T23:59:59Z");
+			return (time - off) / (max - off);
+		}
+		
+		for(var i in data) {
+			var item = data[i];
+			
+			item.time = new Date(item.time);
+			item.delay = normalizeTimeYear(item.time);
+			
+			var colors0 = item.colors;
+			var colors1 = colors0.filter(isNotGrayscale);
+			var colors2 = colors1.filter(isNotSkyBlue);
+			
+			item.color = colors2[0] || colors1[0] || colors0[0];
+		}
+	</script>	
+	</body>
+</html>

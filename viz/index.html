@@ -130,7 +130,7 @@
 				});
 			}
 			
-			var leafletMap = L.map('map').setView([39.525,-119.825], 12);
+			var leafletMap = L.map('map', {scrollWheelZoom: false}).setView([39.525,-119.825], 12);
 			L.tileLayer("http://{s}.sm.mapstack.stamen.com/(toner-lite,$fff[difference],$fff[@23],$fff[hsl-saturation@20])/{z}/{x}/{y}.png").addTo(leafletMap);
 			
 			var raf = null, _T = null;

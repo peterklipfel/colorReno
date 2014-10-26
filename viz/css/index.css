@@ -54,6 +54,16 @@ p {
   -webkit-transform: translate(-50%, -50%);
 }
 iframe {
+  display: block;
   width: 100%;
   height: 100%;
+  border: none;
+}
+
+.pane h2.title {
+  position: absolute;
+  left: 0; right: 0;
+  top: 0;
+  color: white;
+  margin: 0;
 }

@@ -1,7 +1,16 @@
-var input = require('fs').readFileSync('../data/lat_lon_cartoColors.csv').toString().split('\r\n');
+var
+	fs = require('fs'),
+	url = require('url');
 
-var off = new Date("2004-11-01T00:00:00Z");
-var max = new Date("2014-04-01T00:00:00Z");
+var input = fs.readFileSync('../data/imagemagick-quantize.csv').toString().split('\r\n');
+
+var colors = {};
+for(var i in input) {
+	input[i] = input[i].split(',');
+	colors[input[i][0]] = input[i].slice(1);
+}
+
+var input = fs.readFileSync('../data/lat_lon_cartoTime.csv').toString().split('\r\n');
 
 var data = [];
 for(var i in input) {
@@ -10,9 +19,15 @@ for(var i in input) {
 	
 	var item = {
 		location: [+input[i][1],+input[i][0]],
-		time: (new Date(input[i][3]) - off) / (max - off) * 10,
+		time: new Date(input[i][3]),
 		url: input[i][2],
-		colors: input[i].slice(4).map(hextorgb),
+	}
+	
+	item.file = url.parse(item.url).pathname.split('/').pop();
+	
+	item.colors = colors[item.file];
+	for(var c in item.colors) {
+		item.colors[c] = hextorgb(item.colors[c]);
 	}
 	
 	data.push(item);
@@ -22,8 +37,8 @@ console.log('var data =', JSON.stringify(data))
 
 function hextorgb(value) {
 	return [
-		parseInt(value.substr(0,2)),
-		parseInt(value.substr(2,2)),
-		parseInt(value.substr(4,2)),
+		parseInt(value.substr(0,2), 16),
+		parseInt(value.substr(2,2), 16),
+		parseInt(value.substr(4,2), 16),
 	];
 }

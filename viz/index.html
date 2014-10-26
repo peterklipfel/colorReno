@@ -12,12 +12,19 @@
 		<link href="css/index.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
-		<div class="info pane">
+		<div class="pane top">
 			<div><img src="img/logo.png" id="logo" /></div>
 			<h2>Visualizing the Colors of Reno</h2>
 			<p>The map shows colors from the color pallette of images taken at the location of each circle. There are 15000 images that were taken over a 10 year period. All 10 years were superimposed onto a single year.</p>
 			<h4>Double Click to Zoom</h4>
 		</div>
+		<div class="pane">
+		  <div class="words">
+			<h2>Colorific</h2>
+			<p>Colorific uses a command line interface to produce the color pallette of an image. It strips away black and white, and avoids colors that are introduced by anti-aliasing. We are avoiding the backgrounds of images because they are usually uninteresting browns or blacks.</p>
+		  </div>
+		</div>	
+
 		<div class="pane">
 			<h2 class="title">Colorific</h2>
 			<iframe src="colors/colorific.html"></iframe>
@@ -30,7 +37,7 @@
 			<h2 class="title">Per Pixel</h2>
 			<iframe src="colors/pixel.html"></iframe>
 		</div>
-		<div class="info pane">
+		<div class="pane">
 			<div class="words">
 				<h2>Explore Images</h2>
 				<p>Click on any point to access a link to the image</p>

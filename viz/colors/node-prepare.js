@@ -2,7 +2,7 @@ var
 	fs = require('fs'),
 	url = require('url');
 
-var input = fs.readFileSync('../../data/colors_imagemagick-quantize.csv').toString().split('\r\n');
+var input = fs.readFileSync('../../data/colors_quantize.csv').toString().split('\r\n');
 
 var colors = {};
 for(var i in input) {

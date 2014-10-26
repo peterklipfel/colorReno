@@ -61,7 +61,7 @@ iframe {
 
 .pane h2.title {
   position: absolute;
-  left: 0; right: 0;
+  left: 20%; right: 20%;
   top: 0;
   color: white;
   margin: 0;

@@ -2,7 +2,7 @@ var
 	fs = require('fs'),
 	url = require('url');
 
-var input = fs.readFileSync('../data/imagemagick-quantize.csv').toString().split('\r\n');
+var input = fs.readFileSync('../data/colors_colorific.csv').toString().split('\r\n');
 
 var colors = {};
 for(var i in input) {
@@ -10,7 +10,7 @@ for(var i in input) {
 	colors[input[i][0]] = input[i].slice(1);
 }
 
-var input = fs.readFileSync('../data/lat_lon_cartoTime.csv').toString().split('\r\n');
+var input = fs.readFileSync('../data/lat_lon.csv').toString().split('\r\n');
 
 var data = [];
 for(var i in input) {
@@ -24,6 +24,8 @@ for(var i in input) {
 	}
 	
 	item.file = url.parse(item.url).pathname.split('/').pop();
+	
+	if(!colors[item.file]) continue;
 	
 	item.colors = colors[item.file];
 	for(var c in item.colors) {
